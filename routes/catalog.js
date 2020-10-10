@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 // Controller modules
-var book_controller = require('../controllers/bookcontroller');
-var author_controller = require('../controllers/authorcontroller');
-var genre_controller = require('../controllers/genrecontroller');
-var book_instance_controller = require('../controllers/bookinstancecontroller');
+var book_controller = require('../controllers/bookController');
+var author_controller = require('../controllers/authorController');
+var genre_controller = require('../controllers/genreController');
+var book_instance_controller = require('../controllers/bookInstanceController');
 
 // Book routes
 router.get('/', book_controller.index);
