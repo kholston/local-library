@@ -10,24 +10,24 @@ var AuthorSchema = new Schema({
 });
 
 //Virtual for author's full name
-AuthorSchema.virtual('name').get(() => {
+AuthorSchema.virtual('name').get(function () {
   let fullname = '';
   if (this.first_name && this.family_name) {
     fullname = this.family_name + ', ' + this.first_name;
   }
-  if (this.first_name || this.family_name) {
-    fullname = '';
+  if (!this.first_name && !this.family_name) {
+    fullname = 'test';
   }
   return fullname;
 });
 
-AuthorSchema.virtual('lifespan').get(() => {
+AuthorSchema.virtual('lifespan').get(function () {
   return (
     this.date_of_death.getYear() - this.date_of_birth.getYear()
   ).toString();
 });
 
-AuthorSchema.virtual('url').get(() => {
+AuthorSchema.virtual('url').get(function () {
   return '/catalog/author/' + this.id;
 });
 
