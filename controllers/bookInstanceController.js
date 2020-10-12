@@ -1,5 +1,7 @@
 var BookInstance = require('../models/bookinstance');
 
+var async = require('async')
+
 // Display list of bookinstances
 exports.bookinstance_list = (req, res, next) => {
   BookInstance.find()
@@ -16,8 +18,22 @@ exports.bookinstance_list = (req, res, next) => {
 };
 
 // Display detail page for a specific bookinstance
-exports.bookinstance_detail = (req, res) => {
-  res.send('Not Implemented: BookInstance detail: ' + req.params.id);
+exports.bookinstance_detail = (req, res, next) => {
+  async.parallel({
+    book_instance: function(callback){
+      BookInstance.findById(req.params.id)
+      .populate('book')
+      .exec(function (err,book_instance){
+        if(err){return next(err)}
+        if(book_instance == null){
+          var err = new Error('Book copy not found.')
+          err.status = 404;
+          return next(err);
+        }
+        res.render('bookinstance_detail',{title:'Copy: '+ book_instance.book.title,bookinstance:book_instance})
+      })
+    }
+  });
 };
 
 // Display BookInstance create form on Get
