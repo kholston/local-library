@@ -133,7 +133,7 @@ exports.bookinstance_update_get = function(req, res, next) {
         .exec(callback)
       },
       books:function(callback){
-        book.find(callback)
+        Book.find(callback)
       }
     }, function(err,results){
       if(err){return next(err)}
@@ -149,8 +149,8 @@ exports.bookinstance_update_get = function(req, res, next) {
 
 // Handle BookInstance update on POST
 exports.bookinstance_update_post = [
-  body('book','Book must be specified').trim.isLength({min:1}).escape(),
-  body('imprint', 'Imprint must be specified').trim.isLength({min:1}).escape(),  
+  body('book','Book must be specified').trim().isLength({min:1}).escape(),
+  body('imprint', 'Imprint must be specified').trim().isLength({min:1}).escape(),  
   body('status').escape(),
   body('due_back','Invalid date').optional({checkFalsy:true}).isISO8601().toDate(),
 
