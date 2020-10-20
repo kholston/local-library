@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -9,9 +10,8 @@ var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog');
 
 var mongoose = require('mongoose');
-var mongoDB =
-  'mongodb+srv://kenh:whatup28@cluster0.rubft.azure.mongodb.net/local_library?retryWrites=true&w=majority';
-
+var mongoDB = process.env.DB_HOST;
+ 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error: '));
